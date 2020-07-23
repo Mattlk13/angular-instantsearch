@@ -1,6 +1,7 @@
 ---
 title: Widgets - ClearRefinements
 layout: widget.pug
+canonical: https://www.algolia.com/doc/api-reference/widgets/clear-refinements/angular/
 ---
 
 # Clear Refinements
@@ -11,7 +12,7 @@ The ClearRefinements widget displays a button that lets the user clean every ref
 
 ## Options
 
-| Attributes           | Type       | Description
+| Attribute            | Type       | Description
 | -                    | -          | -
 | `clearsQuery?`       | `boolean`  | Pass true to also clear the search query
 | `excludeAttributes?` | `string[]` | Every attributes that should not be removed on clears
@@ -20,5 +21,5 @@ The ClearRefinements widget displays a button that lets the user clean every ref
 ## Code example
 
 ```html
-<ng-ais-current-refinements></ng-ais-current-refinements>
+<ais-clear-refinements></ais-clear-refinements>
 ```

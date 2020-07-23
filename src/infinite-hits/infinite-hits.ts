@@ -4,17 +4,16 @@ import {
   Input,
   TemplateRef,
   Inject,
-  forwardRef
-} from "@angular/core";
+  forwardRef,
+} from '@angular/core';
 
-import { connectInfiniteHits } from "instantsearch.js/es/connectors";
-import { noop, isFunction } from "lodash-es";
-
-import { BaseWidget } from "../base-widget";
-import { NgAisInstantSearch } from "../instantsearch/instantsearch";
+import { connectInfiniteHits } from 'instantsearch.js/es/connectors';
+import { BaseWidget } from '../base-widget';
+import { NgAisInstantSearch } from '../instantsearch/instantsearch';
+import { noop } from '../utils';
 
 @Component({
-  selector: "ng-ais-infinite-hits",
+  selector: 'ais-infinite-hits',
   template: `
     <div [class]="cx()">
       <ng-container *ngTemplateOutlet="template; context: state"></ng-container>
@@ -26,8 +25,8 @@ import { NgAisInstantSearch } from "../instantsearch/instantsearch";
             [class]="cx('item')"
             *ngFor="let hit of state.hits"
           >
-            <ng-ais-highlight attribute="name" [hit]="hit">
-            </ng-ais-highlight>
+            <ais-highlight attribute="name" [hit]="hit">
+            </ais-highlight>
           </li>
         </ul>
       </div>
@@ -41,13 +40,13 @@ import { NgAisInstantSearch } from "../instantsearch/instantsearch";
         {{showMoreLabel}}
       </button>
     </div>
-  `
+  `,
 })
 export class NgAisInfiniteHits extends BaseWidget {
   @ContentChild(TemplateRef) public template?: any;
 
   // render options
-  @Input() public showMoreLabel: string = "Show more results";
+  @Input() public showMoreLabel: string = 'Show more results';
   @Input() public transformItems?: Function;
 
   // inner widget state returned from connector
@@ -60,14 +59,14 @@ export class NgAisInfiniteHits extends BaseWidget {
     hits: [],
     isLastPage: false,
     showMore: noop,
-    results: {}
+    results: {},
   };
 
   constructor(
     @Inject(forwardRef(() => NgAisInstantSearch))
     public instantSearchParent: any
   ) {
-    super("InfiniteHits");
+    super('InfiniteHits');
     this.createWidget(connectInfiniteHits, { escapeHits: true });
   }
 
@@ -82,9 +81,10 @@ export class NgAisInfiniteHits extends BaseWidget {
     this.state = {
       ...state,
       results: state.results,
-      hits: isFunction(this.transformItems)
-        ? this.transformItems(state.hits)
-        : state.hits
+      hits:
+        typeof this.transformItems === 'function'
+          ? this.transformItems(state.hits)
+          : state.hits,
     };
   };
 }

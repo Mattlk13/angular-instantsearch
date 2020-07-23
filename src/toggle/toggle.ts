@@ -1,10 +1,9 @@
-import { Component, Input, Inject, forwardRef } from "@angular/core";
+import { Component, Input, Inject, forwardRef } from '@angular/core';
 
-import { connectToggle } from "instantsearch.js/es/connectors";
-import { noop } from "lodash-es";
-
-import { BaseWidget } from "../base-widget";
-import { NgAisInstantSearch } from "../instantsearch/instantsearch";
+import { connectToggle } from 'instantsearch.js/es/connectors';
+import { BaseWidget } from '../base-widget';
+import { NgAisInstantSearch } from '../instantsearch/instantsearch';
+import { noop } from '../utils';
 
 export type ToggleState = {
   createURL: Function;
@@ -17,7 +16,7 @@ export type ToggleState = {
 };
 
 @Component({
-  selector: "ng-ais-toggle",
+  selector: 'ais-toggle',
   template: `
     <div [class]="cx()">
       <ul [class]="cx('list')">
@@ -41,7 +40,7 @@ export type ToggleState = {
         </li>
       </ul>
     </div>
-  `
+  `,
 })
 export class NgAisToggle extends BaseWidget {
   // connector options
@@ -53,21 +52,21 @@ export class NgAisToggle extends BaseWidget {
   public state: ToggleState = {
     createURL: noop,
     refine: noop,
-    value: {}
+    value: {},
   };
 
   constructor(
     @Inject(forwardRef(() => NgAisInstantSearch))
     public instantSearchParent: any
   ) {
-    super("ToggleRefinement");
+    super('ToggleRefinement');
   }
 
   public ngOnInit() {
     this.createWidget(connectToggle, {
       attributeName: this.attribute,
       label: this.label,
-      values: this.values
+      values: this.values,
     });
     super.ngOnInit();
   }

@@ -2,16 +2,28 @@
 
 set -e # exit when error
 
-(
-  yarn build
-  cd dist
-  yarn unlink
-  yarn link
-)
+yarn
+yarn build
 
 (
   cd examples/$1
   yarn
-  yarn link angular-instantsearch
-  yarn start
+
+  # copy angular-instantsearch
+  rm -rf ./node_modules/angular-instantsearch
+  mkdir -p ./node_modules/angular-instantsearch
+  cp -R ../../dist/* ./node_modules/angular-instantsearch
+
+  # copy same instantsearch.js version
+  rm -rf ./node_modules/instantsearch.js
+  mkdir -p ./node_modules/instantsearch.js
+  cp -R ../../node_modules/instantsearch.js/* ./node_modules/instantsearch.js
+
+  if [ $1 = "server-side-rendering" ]
+  then
+    yarn build:ssr
+    yarn serve:ssr
+  else
+    yarn start
+  fi
 )

@@ -4,52 +4,32 @@ exports[`RefinementList renders markup with state 1`] = `
 <ng-component
   testedWidget={[Function NgAisRefinementList]}
 >
-  
-        <ng-ais-instantsearch>
-    
-          
-    <ng-ais-refinement-list>
-      
-      
+  <ais-instantsearch>
+    <ais-refinement-list>
       
       <div
         class="ais-RefinementList"
       >
         
-        
-        
-        
-  
-        
         <ul
           class="ais-RefinementList-list"
         >
           
-          
-          
           <li
             class="ais-RefinementList-item"
           >
-            
-            
             <label
               class="ais-RefinementList-label"
             >
-              
-              
               <input
                 class="ais-RefinementList-checkbox"
                 type="checkbox"
                 value="foo"
               />
-              
-              
               <span
                 class="ais-RefinementList-labelText"
               >
-                
-                
-                <ng-ais-highlight
+                <ais-highlight
                   attribute="highlighted"
                   ng-reflect-attribute="highlighted"
                   ng-reflect-hit="[object Object]"
@@ -59,46 +39,30 @@ exports[`RefinementList renders markup with state 1`] = `
                   >
                     foo
                   </span>
-                </ng-ais-highlight>
-                
-              
+                </ais-highlight>
               </span>
-              
-              
               <span
                 class="ais-RefinementList-count"
               >
                 100
               </span>
-              
-            
             </label>
-            
-          
           </li>
           <li
             class="ais-RefinementList-item"
           >
-            
-            
             <label
               class="ais-RefinementList-label"
             >
-              
-              
               <input
                 class="ais-RefinementList-checkbox"
                 type="checkbox"
                 value="bar"
               />
-              
-              
               <span
                 class="ais-RefinementList-labelText"
               >
-                
-                
-                <ng-ais-highlight
+                <ais-highlight
                   attribute="highlighted"
                   ng-reflect-attribute="highlighted"
                   ng-reflect-hit="[object Object]"
@@ -108,46 +72,30 @@ exports[`RefinementList renders markup with state 1`] = `
                   >
                     bar
                   </span>
-                </ng-ais-highlight>
-                
-              
+                </ais-highlight>
               </span>
-              
-              
               <span
                 class="ais-RefinementList-count"
               >
                 100
               </span>
-              
-            
             </label>
-            
-          
           </li>
           <li
             class="ais-RefinementList-item"
           >
-            
-            
             <label
               class="ais-RefinementList-label"
             >
-              
-              
               <input
                 class="ais-RefinementList-checkbox"
                 type="checkbox"
                 value="foobar"
               />
-              
-              
               <span
                 class="ais-RefinementList-labelText"
               >
-                
-                
-                <ng-ais-highlight
+                <ais-highlight
                   attribute="highlighted"
                   ng-reflect-attribute="highlighted"
                   ng-reflect-hit="[object Object]"
@@ -157,46 +105,30 @@ exports[`RefinementList renders markup with state 1`] = `
                   >
                     foobar
                   </span>
-                </ng-ais-highlight>
-                
-              
+                </ais-highlight>
               </span>
-              
-              
               <span
                 class="ais-RefinementList-count"
               >
                 100
               </span>
-              
-            
             </label>
-            
-          
           </li>
           <li
             class="ais-RefinementList-item"
           >
-            
-            
             <label
               class="ais-RefinementList-label"
             >
-              
-              
               <input
                 class="ais-RefinementList-checkbox"
                 type="checkbox"
                 value="barfoo"
               />
-              
-              
               <span
                 class="ais-RefinementList-labelText"
               >
-                
-                
-                <ng-ais-highlight
+                <ais-highlight
                   attribute="highlighted"
                   ng-reflect-attribute="highlighted"
                   ng-reflect-hit="[object Object]"
@@ -206,40 +138,20 @@ exports[`RefinementList renders markup with state 1`] = `
                   >
                     barfoo
                   </span>
-                </ng-ais-highlight>
-                
-              
+                </ais-highlight>
               </span>
-              
-              
               <span
                 class="ais-RefinementList-count"
               >
                 100
               </span>
-              
-            
             </label>
-            
-          
           </li>
-          
-        
         </ul>
         
-  
-        
-        
-        
-      
       </div>
-      
-    
-    </ng-ais-refinement-list>
-    
-        
-  </ng-ais-instantsearch>
-      
+    </ais-refinement-list>
+  </ais-instantsearch>
 </ng-component>
 `;
 
@@ -247,46 +159,22 @@ exports[`RefinementList renders markup without state 1`] = `
 <ng-component
   testedWidget={[Function NgAisRefinementList]}
 >
-  
-        <ng-ais-instantsearch>
-    
-          
-    <ng-ais-refinement-list>
-      
-      
+  <ais-instantsearch>
+    <ais-refinement-list>
       
       <div
         class="ais-RefinementList"
       >
         
-        
-        
-        
-  
-        
         <ul
           class="ais-RefinementList-list"
         >
           
-          
-          
-          
-        
         </ul>
         
-  
-        
-        
-        
-      
       </div>
-      
-    
-    </ng-ais-refinement-list>
-    
-        
-  </ng-ais-instantsearch>
-      
+    </ais-refinement-list>
+  </ais-instantsearch>
 </ng-component>
 `;
 
@@ -294,52 +182,32 @@ exports[`RefinementList should apply \`transformItems\` if specified 1`] = `
 <ng-component
   testedWidget={[Function NgAisRefinementList]}
 >
-  
-        <ng-ais-instantsearch>
-    
-          
-    <ng-ais-refinement-list>
-      
-      
+  <ais-instantsearch>
+    <ais-refinement-list>
       
       <div
         class="ais-RefinementList"
       >
         
-        
-        
-        
-  
-        
         <ul
           class="ais-RefinementList-list"
         >
           
-          
-          
           <li
             class="ais-RefinementList-item"
           >
-            
-            
             <label
               class="ais-RefinementList-label"
             >
-              
-              
               <input
                 class="ais-RefinementList-checkbox"
                 type="checkbox"
                 value="foo"
               />
-              
-              
               <span
                 class="ais-RefinementList-labelText"
               >
-                
-                
-                <ng-ais-highlight
+                <ais-highlight
                   attribute="highlighted"
                   ng-reflect-attribute="highlighted"
                   ng-reflect-hit="[object Object]"
@@ -349,46 +217,30 @@ exports[`RefinementList should apply \`transformItems\` if specified 1`] = `
                   >
                     transformed - foo
                   </span>
-                </ng-ais-highlight>
-                
-              
+                </ais-highlight>
               </span>
-              
-              
               <span
                 class="ais-RefinementList-count"
               >
                 100
               </span>
-              
-            
             </label>
-            
-          
           </li>
           <li
             class="ais-RefinementList-item ais-RefinementList-item--selected"
           >
-            
-            
             <label
               class="ais-RefinementList-label"
             >
-              
-              
               <input
                 class="ais-RefinementList-checkbox"
                 type="checkbox"
                 value="bar"
               />
-              
-              
               <span
                 class="ais-RefinementList-labelText"
               >
-                
-                
-                <ng-ais-highlight
+                <ais-highlight
                   attribute="highlighted"
                   ng-reflect-attribute="highlighted"
                   ng-reflect-hit="[object Object]"
@@ -398,46 +250,30 @@ exports[`RefinementList should apply \`transformItems\` if specified 1`] = `
                   >
                     transformed - bar
                   </span>
-                </ng-ais-highlight>
-                
-              
+                </ais-highlight>
               </span>
-              
-              
               <span
                 class="ais-RefinementList-count"
               >
                 100
               </span>
-              
-            
             </label>
-            
-          
           </li>
           <li
             class="ais-RefinementList-item"
           >
-            
-            
             <label
               class="ais-RefinementList-label"
             >
-              
-              
               <input
                 class="ais-RefinementList-checkbox"
                 type="checkbox"
                 value="foobar"
               />
-              
-              
               <span
                 class="ais-RefinementList-labelText"
               >
-                
-                
-                <ng-ais-highlight
+                <ais-highlight
                   attribute="highlighted"
                   ng-reflect-attribute="highlighted"
                   ng-reflect-hit="[object Object]"
@@ -447,46 +283,30 @@ exports[`RefinementList should apply \`transformItems\` if specified 1`] = `
                   >
                     transformed - foobar
                   </span>
-                </ng-ais-highlight>
-                
-              
+                </ais-highlight>
               </span>
-              
-              
               <span
                 class="ais-RefinementList-count"
               >
                 100
               </span>
-              
-            
             </label>
-            
-          
           </li>
           <li
             class="ais-RefinementList-item"
           >
-            
-            
             <label
               class="ais-RefinementList-label"
             >
-              
-              
               <input
                 class="ais-RefinementList-checkbox"
                 type="checkbox"
                 value="barfoo"
               />
-              
-              
               <span
                 class="ais-RefinementList-labelText"
               >
-                
-                
-                <ng-ais-highlight
+                <ais-highlight
                   attribute="highlighted"
                   ng-reflect-attribute="highlighted"
                   ng-reflect-hit="[object Object]"
@@ -496,40 +316,20 @@ exports[`RefinementList should apply \`transformItems\` if specified 1`] = `
                   >
                     transformed - barfoo
                   </span>
-                </ng-ais-highlight>
-                
-              
+                </ais-highlight>
               </span>
-              
-              
               <span
                 class="ais-RefinementList-count"
               >
                 100
               </span>
-              
-            
             </label>
-            
-          
           </li>
-          
-        
         </ul>
         
-  
-        
-        
-        
-      
       </div>
-      
-    
-    </ng-ais-refinement-list>
-    
-        
-  </ng-ais-instantsearch>
-      
+    </ais-refinement-list>
+  </ais-instantsearch>
 </ng-component>
 `;
 
@@ -537,20 +337,10 @@ exports[`RefinementList should be hidden with autoHideContainer 1`] = `
 <ng-component
   testedWidget={[Function NgAisRefinementList]}
 >
-  
-        <ng-ais-instantsearch>
-    
-          
-    <ng-ais-refinement-list>
+  <ais-instantsearch>
+    <ais-refinement-list>
       
-      
-      
-      
-    
-    </ng-ais-refinement-list>
-    
-        
-  </ng-ais-instantsearch>
-      
+    </ais-refinement-list>
+  </ais-instantsearch>
 </ng-component>
 `;

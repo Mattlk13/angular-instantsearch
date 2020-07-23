@@ -1,11 +1,9 @@
-import { Component, Input, Inject, forwardRef } from "@angular/core";
+import { Component, Input, Inject, forwardRef } from '@angular/core';
 
-import { connectMenu } from "instantsearch.js/es/connectors";
-import { noop, isFunction } from "lodash-es";
-
-import { BaseWidget } from "../base-widget";
-import { NgAisInstantSearch } from "../instantsearch/instantsearch";
-import { parseNumberInput } from "../utils";
+import { connectMenu } from 'instantsearch.js/es/connectors';
+import { BaseWidget } from '../base-widget';
+import { NgAisInstantSearch } from '../instantsearch/instantsearch';
+import { parseNumberInput, noop } from '../utils';
 
 export type MenuState = {
   canRefine: boolean;
@@ -18,7 +16,7 @@ export type MenuState = {
 };
 
 @Component({
-  selector: "ng-ais-menu",
+  selector: 'ais-menu',
   template: `
     <div
       [class]="cx()"
@@ -49,12 +47,12 @@ export type MenuState = {
         {{state.isShowingMore ? showLessLabel : showMoreLabel}}
       </button>
     </div>
-  `
+  `,
 })
 export class NgAisMenu extends BaseWidget {
   // render options
-  @Input() public showMoreLabel: string = "Show more";
-  @Input() public showLessLabel: string = "Show less";
+  @Input() public showMoreLabel: string = 'Show more';
+  @Input() public showLessLabel: string = 'Show less';
   @Input() public transformItems?: Function;
 
   // connector options
@@ -70,7 +68,7 @@ export class NgAisMenu extends BaseWidget {
     isShowingMore: false,
     items: [],
     refine: noop,
-    toggleShowMore: noop
+    toggleShowMore: noop,
   };
 
   get isHidden() {
@@ -78,17 +76,17 @@ export class NgAisMenu extends BaseWidget {
   }
 
   get showMoreClass() {
-    let className = this.cx("showMore");
+    let className = this.cx('showMore');
 
     if (!this.state.canToggleShowMore) {
-      className = `${className} ${this.cx("showMore", "disabled")}`;
+      className = `${className} ${this.cx('showMore', 'disabled')}`;
     }
 
     return className;
   }
 
   get items() {
-    return isFunction(this.transformItems)
+    return typeof this.transformItems === 'function'
       ? this.transformItems(this.state.items)
       : this.state.items;
   }
@@ -97,7 +95,7 @@ export class NgAisMenu extends BaseWidget {
     @Inject(forwardRef(() => NgAisInstantSearch))
     public instantSearchParent: any
   ) {
-    super("Menu");
+    super('Menu');
   }
 
   public ngOnInit() {
@@ -105,7 +103,7 @@ export class NgAisMenu extends BaseWidget {
       limit: parseNumberInput(this.limit),
       showMoreLimit: parseNumberInput(this.showMoreLimit),
       attributeName: this.attribute,
-      sortBy: this.sortBy
+      sortBy: this.sortBy,
     });
 
     super.ngOnInit();

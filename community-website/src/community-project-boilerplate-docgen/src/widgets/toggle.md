@@ -1,6 +1,7 @@
 ---
 title: Widgets - Toggle
 layout: widget.pug
+canonical: https://www.algolia.com/doc/api-reference/widgets/toggle-refinement/angular/
 ---
 
 # Toggle
@@ -9,14 +10,14 @@ layout: widget.pug
 
 The toggle widget lets the user either:
 
-* switch between two values for a single facetted attribute (`free_shipping / not_free_shipping`)
-* toggle a faceted value on and off (only `canon` for brands)
+* switch between two values for a single facetted attribute (e.g. `free_shipping` / `not_free_shipping`)
+* toggle a faceted value on and off (e.g. only `canon` for brands)
 
 This widget is particularly useful if you have a boolean value in the records.
 
 ## Options
 
-| Props           | Type                            | Description
+| Attribute       | Type                            | Description
 | -               | -                               | -
 | `attribute`     | `string`                        | Name of the attribute for faceting (eg. “free_shipping”)
 | `label`         | `string`                        | Human-readable name of the filter (eg. “Free Shipping”)
@@ -27,17 +28,17 @@ This widget is particularly useful if you have a boolean value in the records.
 With single value:
 
 ```html
-<ng-ais-toggle
+<ais-toggle
   label="Free Shipping (toggle single value)"
   attribute="free_shipping"
 >
-</ng-ais-toggle>
+</ais-toggle>
 ```
 
 With on & off values:
 
 ```html
-<ng-ais-toggle
+<ais-toggle
   label="Canon (not checked) or Sony (checked)"
   attribute="brand"
   [values]="{
@@ -45,5 +46,5 @@ With on & off values:
     off: 'Canon'
   }"
 >
-</ng-ais-toggle>
+</ais-toggle>
 ```

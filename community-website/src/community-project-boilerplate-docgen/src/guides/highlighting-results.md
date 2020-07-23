@@ -1,6 +1,7 @@
 ---
 title: Guide - Highlighting results
 layout: guide.pug
+canonical: https://www.algolia.com/doc/api-reference/widgets/highlight/angular/
 ---
 
 # Highlighting results
@@ -9,9 +10,9 @@ Search is all about helping users understand the results. This is especially tru
 
 This feature is already packaged for you in Angular InstantSearch.
 
-## `<ng-ais-highlight></ng-ais-highlight>`
+## `<ais-highlight></ais-highlight>`
 
-Highlighting is based on the results and you will need to make a custom Hit template in order to use the Highlighter. The [`<ng-ais-highlight>`](widgets/highlight.html) directive takes two attributes:
+Highlighting is based on the results and you will need to make a custom Hit template in order to use the Highlighter. The [`<ais-highlight>`](widgets/highlight.html) directive takes two attributes:
 
 * `attribute`: the path to the highlighted attribute
 * `hit`: a single result object
@@ -19,15 +20,15 @@ Highlighting is based on the results and you will need to make a custom Hit temp
 Here is an example in which we define a custom Hit template for results that have a `description` field that is highlighted:
 
 ```html
-<ng-ais-hits>
+<ais-hits>
     <ng-template let-hits="hits">
         <div *ngFor="let hit of hits">
-            <ng-ais-highlight
+            <ais-highlight
                 attribute="description"
                 [hit]="hit"
             >
-            </ng-ais-highlight>
+            </ais-highlight>
         </div>
     </ng-template>
-</ng-ais-hits>
+</ais-hits>
 ```

@@ -4,7 +4,7 @@ export function bem(widgetName: string) {
       const scoppedWidgetName = `ais-${widgetName}-${element}`;
 
       // output `ais-Widget-Header|Body|Footer ais-Header|Body|Footer`
-      if (element === "header" || element === "body" || element === "footer") {
+      if (element === 'header' || element === 'body' || element === 'footer') {
         const nonScoppedWidgetName = `ais-${element}`;
         return `${scoppedWidgetName} ${nonScoppedWidgetName}`;
       }
@@ -16,14 +16,20 @@ export function bem(widgetName: string) {
 
       // output `ais-Widget-Xyz`
       return scoppedWidgetName;
-    } else {
-      // output `ais-Widget`
-      return `ais-${widgetName}`;
     }
+
+    // output `ais-Widget`
+    return `ais-${widgetName}`;
   };
   return cx;
 }
 
 export function parseNumberInput(input?: number | string) {
-  return typeof input === "string" ? parseInt(input, 10) : input;
+  return typeof input === 'string' ? parseInt(input, 10) : input;
+}
+
+export function noop(...args: any[]): void {}
+
+export function capitalize(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }

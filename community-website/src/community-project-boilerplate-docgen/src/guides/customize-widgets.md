@@ -1,6 +1,7 @@
 ---
 title: Guide - Customize widgets
 layout: guide.pug
+canonical: https://www.algolia.com/doc/guides/building-search-ui/widgets/customize-an-existing-widget/angular
 ---
 
 # Customize widgets
@@ -29,12 +30,12 @@ The default menu widget renders a list of links, but we would like to render it 
 
 First of all, you will need to write some boilerplate code in order to initialize correctly the `BaseWidget` class. This happens in the `constructor()` of your class extending the `BaseWidget` class.
 
-```js
+```ts
 import { Component, Inject, forwardRef } from '@angular/core';
 import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
 
 @Component({
-  selector: 'ng-ais-menu-select',
+  selector: 'ais-menu-select',
   template: '<p>It works!</p>'
 })
 export class MenuSelect extends BaseWidget {
@@ -47,7 +48,7 @@ export class MenuSelect extends BaseWidget {
 }
 ```
 
-* We need to reference the `<ng-ais-instantsearch>` parent component instance on the widget class
+* We need to reference the `<ais-instantsearch>` parent component instance on the widget class
 * We need to indicate also the widget name
 
 We have the first code needed for our MenuSelect widget, let's move on with the connector part!
@@ -62,13 +63,13 @@ In our case, we will use the `connectMenu` which accepts multiple options but fo
 
 (The `attributeName` is the name of the attribute for faceting)
 
-```js
+```ts
 import { Component, Inject, forwardRef } from '@angular/core';
 import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectMenu } from 'instantsearch.js/es/connectors';
 
 @Component({
-  selector: 'ng-ais-menu-select',
+  selector: 'ais-menu-select',
   template: '<p>It works!</p>'
 })
 export class MenuSelect extends BaseWidget {
@@ -86,11 +87,11 @@ export class MenuSelect extends BaseWidget {
 }
 ```
 
-That's it, your widget is connected to InstantSearch.js and the state of the search it self! Now let's update the rendering of this widget
+That's it, your widget is connected to InstantSearch.js and the state of the search itself! Now let's update the rendering of this widget
 
 ### 3. Render from the state
 
-Your component instance has access a property `this.state` which holds the rendering options of the widget.
+Your component instance has access to a property `this.state` which holds the rendering options of the widget.
 
 From the [connectMenu](https://community.algolia.com/instantsearch.js/v2/connectors/connectMenu.html) InstantSearch.js connector documentation, we can see that we have access to:
 
@@ -106,7 +107,7 @@ For instance if you want to access the items, you will need to use `this.state.i
 
 If you compile your Angular application with [AOT](https://angular.io/guide/aot-compiler) you will need to define the typings of the `state` class property. In this example it will look like this:
 
-```js
+```ts
 state: {
   items: { label: string; value: string }[];
   createURL: () => string;
@@ -120,13 +121,13 @@ state: {
 
 Last step, let's write together the component template:
 
-```js
+```ts
 import { Component, Inject, forwardRef } from '@angular/core';
 import { BaseWidget, NgAisInstantSearch } from 'angular-instantsearch';
 import { connectMenu } from 'instantsearch.js/es/connectors';
 
 @Component({
-  selector: 'ng-ais-menu-select',
+  selector: 'ais-menu-select',
   template: `
     <select
       class="menu-select"
@@ -166,7 +167,8 @@ export class MenuSelect extends BaseWidget {
   }
 }
 ```
+In `app.module.ts`, make sure to add the component by doing `import { MenuSelect } from './menu.component';` and then adding `MenuSelect` to the `declarations`.
 
-You can now use your directive `<ng-ais-menu-select></ng-ais-menu-select>` to display your custom MenuSelect widget!
+You can now use your directive `<ais-menu-select></ais-menu-select>` to display your custom MenuSelect widget!
 
-We have a live example of this newly created MenuSelect in our [widget showcase](http://angular-instantsearch.netlify.com/dev-novel/?selectedStory=CustomWidgets.MenuSelect).
+We have a live example of this newly created MenuSelect in our [widget showcase](/angular-instantsearch/examples/storybook/?selectedKind=Custom%20widgets&selectedStory=MenuSelect).

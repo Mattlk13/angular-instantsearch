@@ -1,6 +1,7 @@
 ---
 title: Widgets - Stats
 layout: widget.pug
+canonical: https://www.algolia.com/doc/api-reference/widgets/stats/angular/
 ---
 
 # Stats
@@ -13,15 +14,15 @@ The Stats component displays the total number of matching hits and the time it t
 
 You can use the directive `<ng-template></ng-template>` to customize the output:
 
-```js
+```ts
 @Component({
   selector: 'my-app',
   template: `
-    <ng-ais-stats>
+    <ais-stats>
       <ng-template let-state="state">
-        {{stats.nbHits}} results found in {{stats.processingTimeMS}}ms.
+        {{state.nbHits}} results found in {{state.processingTimeMS}}ms.
       </ng-template>
-    </ng-ais-stats>
+    </ais-stats>
   `
 })
 export class AppComponent {}

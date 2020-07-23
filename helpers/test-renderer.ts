@@ -52,16 +52,18 @@ function render(
 ) {
   @Component({
     template: `
-      <ng-ais-instantsearch>
+      <ais-instantsearch>
         ${template}
-      </ng-ais-instantsearch>
+      </ais-instantsearch>
     `
   })
   class TestContainer {
     @ViewChild(TestedWidget) testedWidget;
   }
 
-  TestBed.configureTestingModule({
+  TestBed.configureCompiler({
+    preserveWhitespaces: false
+  } as any).configureTestingModule({
     declarations: [
       TestContainer,
       TestedWidget,

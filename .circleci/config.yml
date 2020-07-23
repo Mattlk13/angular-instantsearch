@@ -5,37 +5,63 @@
 version: 2
 jobs:
   build:
-    filters:
-      branches:
-        only: /^(?!gitbook).*$/
-
     docker:
       # specify the version you desire here
-      - image: circleci/node:8.6.0
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+      - image: circleci/node:10@sha256:75c05084fff4afa3683a03c5a04a4a3ad95c536ff2439d8fe14e7e1f5c58b09a
 
     working_directory: ~/repo
 
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - yarn-packages-{{ checksum "yarn.lock" }}
 
-      - run: yarn install
+      - run:
+          name: Install Dependencies
+          command: yarn
+
+      - run:
+          name: Build
+          command: yarn build
+
+      - run:
+          name: Build ecommerce example
+          command: |
+            yarn examples:ecommerce:build
+      - run:
+          name: Build router example
+          command: |
+            yarn examples:router:build
+      - run:
+          name: Build media example
+          command: |
+            yarn examples:media:build
+      - run:
+          name: Build ssr example
+          command: |
+            yarn examples:ssr:build
+      - run:
+          name: Test ssr example
+          command: |
+            yarn examples:ssr:test
+      - run:
+          name: Build storybook
+          command: |
+            yarn examples:storybook:build
 
       - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - ~/.cache/yarn
+            - ./node_modules
 
-      # run tests!
-      - run: yarn test:ci
+      - run:
+          name: run CI
+          command: yarn test:ci
+
+      - run:
+          name: Trigger a release if the latest commit is a release commit
+          command: yarn shipjs trigger

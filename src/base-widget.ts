@@ -1,13 +1,18 @@
-import { Input, OnDestroy, OnInit } from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";
-import { noop } from "lodash-es";
-
-import { NgAisInstantSearch } from "./instantsearch/instantsearch";
-import { bem } from "./utils";
+import { Input, OnDestroy, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { bem, noop } from './utils';
 
 export class Widget {
-  public init: () => void;
-  public getConfiguration: () => object;
+  public init: (
+    params: {
+      templatesConfig: object;
+      state: object;
+      results: object[];
+      createURL: (value: any) => string;
+      instantSearchInstance: object;
+    }
+  ) => void;
+  public getConfiguration?: () => object;
   public render: (
     params: {
       templatesConfig: object;
@@ -73,10 +78,10 @@ export class BaseWidget implements OnInit, OnDestroy {
 
   // helper method for genering item list className
   public getItemClass(item: { isRefined?: boolean }) {
-    let className = this.cx("item");
+    let className = this.cx('item');
 
     if (item.isRefined) {
-      className = `${className} ${this.cx("item", "selected")}`;
+      className = `${className} ${this.cx('item', 'selected')}`;
     }
 
     return className;

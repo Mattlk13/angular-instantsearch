@@ -1,10 +1,8 @@
-import { Component, Input, Inject, forwardRef } from "@angular/core";
-
-import { connectBreadcrumb } from "instantsearch.js/es/connectors";
-import { noop } from "lodash-es";
-
-import { BaseWidget } from "../base-widget";
-import { NgAisInstantSearch } from "../instantsearch/instantsearch";
+import { Component, Input, Inject, forwardRef } from '@angular/core';
+import { connectBreadcrumb } from 'instantsearch.js/es/connectors';
+import { BaseWidget } from '../base-widget';
+import { NgAisInstantSearch } from '../instantsearch/instantsearch';
+import { noop } from '../utils';
 
 export type BreadcrumbState = {
   createURL: Function;
@@ -18,7 +16,7 @@ export type BreadcrumbItem = {
 };
 
 @Component({
-  selector: "ng-ais-breadcrumb",
+  selector: 'ais-breadcrumb',
   template: `
     <div
       [class]="cx()"
@@ -52,7 +50,7 @@ export type BreadcrumbItem = {
         </li>
       </ul>
     </div>
-  `
+  `,
 })
 export class NgAisBreadcrumb extends BaseWidget {
   // connector options
@@ -67,27 +65,27 @@ export class NgAisBreadcrumb extends BaseWidget {
     return this.state.items.map((item, idx) => ({
       ...item,
       separator: idx !== 0,
-      isLast: idx === this.state.items.length - 1
+      isLast: idx === this.state.items.length - 1,
     }));
   }
 
   public state: BreadcrumbState = {
     createURL: noop,
     items: [],
-    refine: noop
+    refine: noop,
   };
 
   constructor(
     @Inject(forwardRef(() => NgAisInstantSearch))
     public instantSearchParent: any
   ) {
-    super("Breadcrumb");
+    super('Breadcrumb');
   }
 
   public ngOnInit() {
     this.createWidget(connectBreadcrumb, {
       attributes: this.attributes,
-      rootPath: this.rootPath
+      rootPath: this.rootPath,
     });
 
     super.ngOnInit();

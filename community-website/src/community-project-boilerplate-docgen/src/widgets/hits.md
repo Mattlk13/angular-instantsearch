@@ -1,6 +1,7 @@
 ---
 title: Widgets - Hits
 layout: widget.pug
+canonical: https://www.algolia.com/doc/api-reference/widgets/hits/angular/
 ---
 
 # Hits
@@ -8,12 +9,18 @@ layout: widget.pug
 ## Description
 
 Displays a list of hits.
-sYou can use the directive `<ng-template></ng-template>` to customize.
+You can use the directive `<ng-template></ng-template>` to customize.
+
+## Options
+
+| Attribute         | Type               | Description
+| -                 | -                  | -
+| `transformItems?` | `(items) => items` | Function to modify the items being displayed, e.g. for filtering or sorting them
 
 ## Code example
 
 ```html
-<ng-ais-hits>
+<ais-hits>
   <ng-template
     let-hits="hits"
     let-results="results"
@@ -26,15 +33,15 @@ sYou can use the directive `<ng-template></ng-template>` to customize.
     <!-- Hit template -->
     <div *ngFor="let hit of hits">
       <h1>
-        <ng-ais-highlight
+        <ais-highlight
           attribute="title"
           [hit]="hit"
         >
-        </ng-ais-highlight>
+        </ais-highlight>
       </h1>
 
       <p>{{hit.description}}</p>
     </div>
   </ng-template>
-</ng-ais-hits>
+</ais-hits>
 ```

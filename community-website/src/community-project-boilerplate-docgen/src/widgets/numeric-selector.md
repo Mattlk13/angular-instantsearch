@@ -1,6 +1,7 @@
 ---
 title: Widgets - Numeric Selector
 layout: widget.pug
+# no canonical widget because this is not replaced
 ---
 
 # Numeric Selector
@@ -11,7 +12,7 @@ The Numeric Selector component lets the user choose between numerical refinement
 
 ## Options
 
-| Attributes  | Type                                   | Description
+| Attribute   | Type                                   | Description
 | -           | -                                      | -
 | `attribute` | `string`                               | Name of the numeric attribute to use
 | `items`     | `{value: number, label: string}[]`     | The list of indexes to search in
@@ -20,7 +21,7 @@ The Numeric Selector component lets the user choose between numerical refinement
 ## Code example
 
 ```html
-<ng-ais-numeric-selector
+<ais-numeric-selector
   attribute="rating"
   operator="="
   [items]="[
@@ -32,5 +33,5 @@ The Numeric Selector component lets the user choose between numerical refinement
     { label: 'Rating: 1', value: 1 }
   ]"
 >
-</ng-ais-numeric-selector>
+</ais-numeric-selector>
 ```

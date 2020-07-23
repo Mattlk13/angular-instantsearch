@@ -1,6 +1,7 @@
 ---
 title: Widgets - Numeric Menu
 layout: widget.pug
+canonical: https://www.algolia.com/doc/api-reference/widgets/numeric-menu/angular/
 ---
 
 # Numeric Menu
@@ -11,7 +12,7 @@ The Numeric Menu is a component that displays a list of numeric filters in a lis
 
 ## Options
 
-| Attributes           | Type                                             | Description
+| Attribute            | Type                                             | Description
 | -                    | -                                                | -
 | `attribute         ` | `string`                                         | Name of the numeric attribute to use
 | `items`              | `{name: string, start?: number, end?: number}[]` | The list of indexes to search in
@@ -20,7 +21,7 @@ The Numeric Menu is a component that displays a list of numeric filters in a lis
 ## Code example
 
 ```html
-<ng-ais-numeric-menu
+<ais-numeric-menu
   attribute="price"
   operator="or"
   [items]="[
@@ -31,5 +32,5 @@ The Numeric Menu is a component that displays a list of numeric filters in a lis
     { start: 10, name: 'more than 10' }
   ]"
 >
-</ng-ais-numeric-menu>
+</ais-numeric-menu>
 ```

@@ -1,7 +1,5 @@
-import { Input, OnDestroy, OnInit } from "@angular/core";
-import { noop } from "lodash-es";
-
-import { bem } from "../utils";
+import { Input, OnDestroy, OnInit } from '@angular/core';
+import { bem } from '../utils';
 
 export class BaseWidget implements OnInit, OnDestroy {
   // header footer
@@ -33,10 +31,10 @@ export class BaseWidget implements OnInit, OnDestroy {
   };
 
   public getItemClass(item: { isRefined?: boolean }) {
-    let className = this.cx("item");
+    let className = this.cx('item');
 
     if (item.isRefined) {
-      className = `${className} ${this.cx("item", "selected")}`;
+      className = `${className} ${this.cx('item', 'selected')}`;
     }
 
     return className;

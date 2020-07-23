@@ -1,6 +1,7 @@
 ---
 title: Widgets - Instantsearch
 layout: widget.pug
+canonical: https://www.algolia.com/doc/api-reference/widgets/instantsearch/angular/
 ---
 
 # Instantsearch
@@ -11,7 +12,7 @@ Is the root component of all Angular InstantSearch implementations.
 
 ## Options
 
-| Attributes    | Type            | Description
+| Attribute     | Type            | Description
 | -             | -               | -
 | `config`      | `ConfigOptions` | The config object to pass to the instantsearch instance
 
@@ -25,18 +26,18 @@ Those parameters can be found in your [Algolia dashboard](https://www.algolia.co
 
 ## Code example
 
-```js
+```ts
 @Component({
-  selector: 'ng-ais-app',
+  selector: 'ais-app',
   template: `
-    <ng-ais-instantsearch
+    <ais-instantsearch
       [config]="{
         apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
         appId: 'latency',
         indexName: 'instant_search'
       }"
     >
-    </ng-ais-instantsearch>
+    </ais-instantsearch>
   `
 })
 export class AppComponent {}
@@ -56,13 +57,17 @@ export class AppComponent {}
 `numberLocale?: string`
 > The locale used to display numbers. This will be passed to `Number.prototype.toLocaleString()`
 
-`searchFunction?: Function`
+`searchFunction?: (helper: AlgoliaSearchHelper) => void`
 > A hook that will be called each time a search needs to be done, with the helper as a parameter. It’s your responsibility to call `helper.search()`. This option allows you to avoid doing searches at page load for example.
 
 `createAlgoliaClient?: (algoliasearch: Function, appId: string, apiKey: string) => CustomClient`
+> _Deprecated in favor of `searchClient`._
 > Allows you to provide your own algolia client instead of the one instantiated internally.
 > Useful in situations where you need to setup complex mechanism on the client or if you need to share it easily.
 > We forward `algoliasearch` which is the original algoliasearch module imported inside angular-instantsearch.
+
+`searchClient?: {}`
+> The search client to plug to InstantSearch.js.
 
 `searchParameters?: {}`
 > Additional parameters to pass to the Algolia API.
@@ -90,17 +95,17 @@ export class AppComponent {}
 
 #### Events
 
-You can register to the `(change)` event on the `<ng-ais-instantsearch>` which will be fired after every new search. This event is useful for instance to push data to Google Analytics to know more about your users search:
+You can register to the `(change)` event on the `<ais-instantsearch>` which will be fired after every new search. This event is useful for instance to push data to Google Analytics to know more about your users search:
 
 ```html
-<ng-ais-instantsearch
+<ais-instantsearch
   [config]="{...}"
   (change)="onSearchChange($event)"
 >
-</ng-ais-instantsearch>
+</ais-instantsearch>
 ```
 
-```js
+```ts
 onSearchChange({ results, state }: { results: {}, state: {} }) {
   // Do what ever you need with the results or the state of search
 }

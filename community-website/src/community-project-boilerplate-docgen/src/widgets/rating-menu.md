@@ -1,6 +1,7 @@
 ---
 title: Widgets - Rating Menu
 layout: widget.pug
+canonical: https://www.algolia.com/doc/api-reference/widgets/rating-menu/angular/
 ---
 
 # Rating Menu
@@ -11,7 +12,7 @@ RatingMenu is used for displaying grade like filters. The values are normalized 
 
 ## Options
 
-| Attributes           | Type       | Description
+| Attribute            | Type       | Description
 | -                    | -          | -
 | `attribute`          | `string`   | Name of the attribute for faceting
 | `andUpLabel?`        | `string`   | Label to display after the stars
@@ -21,9 +22,9 @@ RatingMenu is used for displaying grade like filters. The values are normalized 
 ## Code example
 
 ```html
-<ng-ais-rating-menu
+<ais-rating-menu
   attribute="rating"
   [max]="5"
 >
-</ng-ais-rating-menu>
+</ais-rating-menu>
 ```

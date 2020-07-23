@@ -1,18 +1,11 @@
-import {
-  Component,
-  Input,
-  Inject,
-  PLATFORM_ID,
-  forwardRef
-} from "@angular/core";
-import { connectClearAll } from "instantsearch.js/es/connectors";
-import { noop } from "lodash-es";
-
-import { BaseWidget } from "../base-widget";
-import { NgAisInstantSearch } from "../instantsearch/instantsearch";
+import { Component, Input, Inject, forwardRef } from '@angular/core';
+import { connectClearAll } from 'instantsearch.js/es/connectors';
+import { BaseWidget } from '../base-widget';
+import { NgAisInstantSearch } from '../instantsearch/instantsearch';
+import { noop } from '../utils';
 
 @Component({
-  selector: "ng-ais-clear-refinements",
+  selector: 'ais-clear-refinements',
   template: `
     <div
       [class]="cx()"
@@ -26,14 +19,17 @@ import { NgAisInstantSearch } from "../instantsearch/instantsearch";
         {{buttonLabel}}
       </button>
     </div>
-  `
+  `,
 })
 export class NgAisClearRefinements extends BaseWidget {
-  @Input() public buttonLabel: string = "Clear refinements";
+  @Input() public buttonLabel: string = 'Clear refinements';
   @Input() public clearsQuery: boolean = false;
   @Input() public excludeAttributes: string[] = [];
 
-  public state = { hasRefinements: false, refine: noop };
+  public state = {
+    hasRefinements: false,
+    refine: noop,
+  };
 
   get isHidden() {
     return !this.state.hasRefinements && this.autoHideContainer;
@@ -43,14 +39,14 @@ export class NgAisClearRefinements extends BaseWidget {
     @Inject(forwardRef(() => NgAisInstantSearch))
     public instantSearchParent: any
   ) {
-    super("ClearRefinements");
+    super('ClearRefinements');
   }
 
   public ngOnInit() {
     // we need to `createWidget` from `ngOnInit` to have `@Input()` intialized
     this.createWidget(connectClearAll, {
       clearsQuery: this.clearsQuery,
-      excludeAttributes: this.excludeAttributes
+      excludeAttributes: this.excludeAttributes,
     });
 
     super.ngOnInit();

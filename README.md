@@ -1,6 +1,6 @@
 # Angular InstantSearch
 
-> ⚡ Lightning-fast search for Angular app apps, by [Algolia][algolia-website].
+> ⚡ Lightning-fast search for Angular apps, by [Algolia][algolia-website].
 
 [![Version][version-svg]][package-url] [![Build Status][ci-badge]][ci-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
 
@@ -8,11 +8,15 @@ InstantSearch projects: **Angular InstantSearch** | [React InstantSearch][react-
 
 ## Angular compatibility
 
-Angular InstantSearch is **compatible with Angular 4 and 5**. If you need a different version of Angular, please [open an issue](https://github.com/algolia/react-instantsearch/issues/new) or come [chat with us](https://gitter.im/angular-instantsearch).
+Angular InstantSearch is **compatible with Angular 5 and above**. If you need a different version of Angular, please [open an issue](https://github.com/algolia/angular-instantsearch/issues/new).
 
 ## Documentation
 
 There's a dedicated documentation available at <https://community.algolia.com/angular-instantsearch/>.
+
+## Troubleshooting
+
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/guides/building-search-ui/troubleshooting/faq/angular/) where you will find answers for the most common issues and gotchas with the library.
 
 ## Contributing
 

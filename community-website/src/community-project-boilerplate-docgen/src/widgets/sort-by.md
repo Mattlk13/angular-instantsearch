@@ -1,6 +1,7 @@
 ---
 title: Widgets - Sort By
 layout: widget.pug
+canonical: https://www.algolia.com/doc/api-reference/widgets/sort-by/angular/
 ---
 
 # Sort by
@@ -11,19 +12,19 @@ The SortBy component displays a list of indexes allowing a user to change the hi
 
 ## Options
 
-| Attributes  | Type                              | Description
+| Attribute   | Type                              | Description
 | -           | -                                 | -
 | `items`     | `{name: string, label: string}[]` | The list of indexes to search in
 
 ## Code example
 
 ```html
-<ng-ais-sort-by
+<ais-sort-by
   [items]="[
     { name: 'instant_search', label: 'Most relevant' },
     { name: 'instant_search_price_asc', label: 'Lowest price' },
     { name: 'instant_search_price_desc', label: 'Highest price' }
   ]"
 >
-</ng-ais-sort-by>
+</ais-sort-by>
 ```

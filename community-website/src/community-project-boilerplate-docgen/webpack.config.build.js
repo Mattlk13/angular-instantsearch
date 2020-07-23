@@ -5,6 +5,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   ...webpackConfig,
+  mode: 'production',
   devtool: 'source-map',
   output: {
     ...webpackConfig.output,
@@ -13,6 +14,12 @@ module.exports = {
   plugins: [
     new UglifyJsPlugin({
       sourceMap: true,
+      // The version 1.2.7 of uglifyjs-webpack-plugin changed the default option
+      // to compress: { inline: 1 } but it breaks the application. Revert the previous
+      // default value did the trick.
+      uglifyOptions: {
+        compress: true,
+      },
     }),
     ...webpackConfig.plugins,
   ],

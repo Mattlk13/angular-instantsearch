@@ -1,6 +1,7 @@
 ---
 title: Widgets - Range Input
 layout: widget.pug
+canonical: https://www.algolia.com/doc/api-reference/widgets/range-input/angular/
 ---
 
 # Range Input
@@ -11,7 +12,7 @@ Numeric range widget allows a user to select a numeric range using a minimum and
 
 ## Options
 
-| Attributes       | Type       | Description
+| Attribute        | Type       | Description
 | -                | -          | -
 | `attribute`      | `string`   | Name of the attribute for faceting
 | `min?`           | `number`   | Minimal value, default to automatically computed
@@ -21,11 +22,11 @@ Numeric range widget allows a user to select a numeric range using a minimum and
 ## Code example
 
 ```html
-<ng-ais-range-input
+<ais-range-input
   attribute="price"
   [min]="10"
   [max]="10"
   [precision]="2"
 >
-</ng-ais-range-input>
+</ais-range-input>
 ```

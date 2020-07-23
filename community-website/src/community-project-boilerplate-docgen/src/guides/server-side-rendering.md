@@ -1,6 +1,7 @@
 ---
 title: Guide - Server side rendering
 layout: guide.pug
+canonical: https://www.algolia.com/doc/guides/building-search-ui/going-further/server-side-rendering/angular/
 ---
 
 # Server Side Rendering
@@ -9,9 +10,11 @@ This is an advanced guide, if you never used Angular InstantSearch, you should f
 
 You can find the result of this guide on the Angular InstantSearch [repository](https://github.com/algolia/angular-instantsearch/tree/master/examples/server-side-rendering).
 
-Angular InstantSearch is compatible with server-side rendering starting with Angular version 5. We provide an API that is easy to use with [@angular/universal](https://github.com/angular/universal) modules.
+Angular InstantSearch is compatible with server-side rendering with Angular version 5. We provide an API that is easy to use with [@angular/universal](https://github.com/angular/universal) modules.
 
 For simplicity we are going to use the [@angular/universal-starter](https://github.com/angular/universal-starter) boilerplate which is a minimal Angular starter for Universal JavaScript using TypeScript and Webpack.
+
+**Angular Universal is not working completely with version 6, you will need to checkout a specific commit of `universal-start` boilerplate.**
 
 ### How it works?
 
@@ -28,14 +31,15 @@ First, clone the [@angular/universal-starter](https://github.com/angular/univers
 
 ```sh
 > git clone git@github.com:angular/universal-starter.git [your-app-name]
+> git reset --hard 02758f80501b18b9f49834e367136bd9590ccc04 # Angular 5
 > cd [your-app-name]
-> npm install
+> yarn
 ```
 
 The next step is to install [preboot](https://github.com/angular/preboot) and [angular-instantsearch](https://github.com/algolia/angular-instantsearch) packages as well:
 
 ```sh
-> npm install preboot angular-instantsearch --save
+> yarn add preboot angular-instantsearch
 ```
 
 Now you have all the requirements to start developing your universal Angular InstantSearch application!
@@ -44,7 +48,7 @@ Now you have all the requirements to start developing your universal Angular Ins
 
 Once you installed the dependencies you will need to add the `TransferState`, `preboot` and `HttpClient` modules into `src/app/app.module.ts`:
 
-```js
+```ts
 import {
   BrowserModule,
   BrowserTransferStateModule
@@ -82,7 +86,7 @@ export class AppModule { }
 
 We need also to import `ServerTransferStateModule` into `src/app/app.server.module.ts`:
 
-```js
+```ts
 
 import { NgModule } from '@angular/core';
 import {
@@ -112,7 +116,7 @@ And voilà, you have the requirements and your are now ready to plug Angular Ins
 
 In order to get the query of the client request into your Angular application you need to provide the original `request` object you receive into the express server. Open `./server.ts` and replace this block:
 
-```js
+```ts
 app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
   providers: [
@@ -123,7 +127,7 @@ app.engine('html', ngExpressEngine({
 
 By this one:
 
-```js
+```ts
 app.engine('html', (_, options, callback) => {
   const engine = ngExpressEngine({
     bootstrap: AppServerModuleNgFactory,
@@ -142,18 +146,18 @@ Now on server-side rendering we can have access to the `request` object by using
 
 First, you need to import the Angular InstantSearch module into your application like you will do in any Angular application. (If you don't know how to do this, please read the following part in the [getting started](/#import-module) guide).
 
-The only difference is on how you configure `<ng-ais-instantsearch>` component.
+The only difference is on how you configure `<ais-instantsearch>` component.
 
 This will be our starting component. For simplicity you can re-use the Home component from the universal starter boilerplate:
 
-```js
+```ts
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'home',
   template: `
-    <ng-ais-instantsearch [config]="instantSearchConfig">
-    </ng-ais-instantsearch>
+    <ais-instantsearch [config]="instantSearchConfig">
+    </ais-instantsearch>
   `
 })
 export class HomeComponent {
@@ -163,7 +167,7 @@ export class HomeComponent {
     this.instantSearchConfig = {
       appId: "latency",
       apiKey: "6be0576ff61c053d5f9a3225e2a90f76",
-      indexName: "ikea",
+      indexName: "instant_search",
       urlSync: true
     }
   }
@@ -172,7 +176,7 @@ export class HomeComponent {
 
 We will need to now import the `TransferState`, `HttpClient`, `Injector` and `PLATFORM_ID` into our constructor, let's update our component code:
 
-```js
+```ts
 import { Component, Injector, Inject, PLATFORM_ID } from "@angular/core";
 import { isPlatformServer } from "@angular/common";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -181,8 +185,8 @@ import { TransferState, makeStateKey } from "@angular/platform-browser";
 @Component({
   selector: 'home',
   template: `
-    <ng-ais-instantsearch [config]="instantSearchConfig">
-    </ng-ais-instantsearch>
+    <ais-instantsearch [config]="instantSearchConfig">
+    </ais-instantsearch>
   `
 })
 export class HomeComponent {
@@ -197,7 +201,7 @@ export class HomeComponent {
     this.instantSearchConfig = {
       appId: "latency",
       apiKey: "6be0576ff61c053d5f9a3225e2a90f76",
-      indexName: "ikea",
+      indexName: "instant_search",
       urlSync: true
     }
   }
@@ -206,9 +210,9 @@ export class HomeComponent {
 
 Final step is to update the `instantSearchConfig` with the modules we provide into `angular-instantsearch` in order to allow the Algolia API requests to be made on the server side:
 
-```js
+```ts
 import {
-  createSSRAlgoliaClient,
+  createSSRSearchClient,
   parseServerRequest
 } from "angular-instantsearch";
 
@@ -228,19 +232,21 @@ constructor(
 
   this.instantSearchConfig = {
     searchParameters,
-    appId: "latency",
-    apiKey: "6be0576ff61c053d5f9a3225e2a90f76",
-    indexName: "ikea",
+    indexName: "instant_search",
     urlSync: true,
-    createAlgoliaClient: createSSRAlgoliaClient({
+    searchClient: createSSRSearchClient({
       makeStateKey,
       HttpHeaders,
       transferState: this.transferState,
-      httpClient: this.httpClient
+      httpClient: this.httpClient,
+      appId: "latency",
+      apiKey: "6be0576ff61c053d5f9a3225e2a90f76"
     })
   };
 }
 ```
+
+**You cannot use `routing: true` option instead of `urlSync: true` yet, there is an issue with Preboot that will randomly render a blank page**
 
 ### 4. Wrapping up
 

@@ -7,28 +7,167 @@ import {
   Output,
   EventEmitter,
   Inject,
-  PLATFORM_ID
-} from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";
+  PLATFORM_ID,
+  VERSION as AngularVersion,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
-import instantsearch from "instantsearch.js/es";
+import * as algoliasearchProxy from 'algoliasearch/lite';
+import instantsearch from 'instantsearch.js/es';
+import { AlgoliaSearchHelper } from 'algoliasearch-helper';
 
-import { Widget } from "../base-widget";
-import { VERSION } from "../version";
+import { Widget } from '../base-widget';
+import { VERSION } from '../version';
+
+const algoliasearch = algoliasearchProxy.default || algoliasearchProxy;
+
+export type SearchRequest = {
+  indexName: string;
+  params: SearchRequestParameters;
+};
+
+export type SearchForFacetValuesRequest = {
+  indexName: string;
+  params: SearchForFacetValuesRequestParameters;
+};
+
+// Documentation: https://www.algolia.com/doc/api-reference/search-api-parameters/
+export type SearchParameters = {
+  // Attributes
+  attributesToRetrieve?: string[];
+  restrictSearchableAttributes?: string[];
+
+  // Filtering
+  filters?: string;
+  facetFilters?: string[];
+  optionalFilters?: string[];
+  numericFilters?: string[];
+  sumOrFiltersScores?: boolean;
+
+  // Faceting
+  facets?: string[];
+  maxValuesPerFacet?: number;
+  facetingAfterDistinct?: boolean;
+  sortFacetValuesBy?: string;
+
+  // Highlighting / Snippeting
+  attributesToHighlight?: string[];
+  attributesToSnippet?: string[];
+  highlightPreTag?: string;
+  highlightPostTag?: string;
+  snippetEllipsisText?: string;
+  restrictHighlightAndSnippetArrays?: boolean;
+
+  // Pagination
+  page?: number;
+  hitsPerPage?: number;
+  offset?: number;
+  length?: number;
+
+  // Typos
+  minWordSizefor1Typo?: number;
+  minWordSizefor2Typos?: number;
+  typoTolerance?: string | boolean;
+  allowTyposOnNumericTokens?: boolean;
+  ignorePlurals?: boolean | string[];
+  disableTypoToleranceOnAttributes?: string[];
+
+  // Geo-Search
+  aroundLatLng?: string;
+  aroundLatLngViaIP?: boolean;
+  aroundRadius?: number | 'all';
+  aroundPrecision?: number;
+  minimumAroundRadius?: number;
+  insideBoundingBox?: GeoRectangle | GeoRectangle[];
+  insidePolygon?: GeoPolygon | GeoPolygon[];
+
+  // Query Strategy
+  queryType?: string;
+  removeWordsIfNoResults?: string;
+  advancedSyntax?: boolean;
+  optionalWords?: string | string[];
+  removeStopWords?: boolean | string[];
+  disableExactOnAttributes?: string[];
+  exactOnSingleWordQuery?: string;
+  alternativesAsExact?: string[];
+
+  // Query Rules
+  enableRules?: boolean;
+  ruleContexts?: string[];
+
+  // Advanced
+  minProximity?: number;
+  responseFields?: string[];
+  maxFacetHits?: number;
+  percentileComputation?: boolean;
+  distinct?: number | boolean;
+  getRankingInfo?: boolean;
+  clickAnalytics?: boolean;
+  analytics?: boolean;
+  analyticsTags?: string[];
+  synonyms?: boolean;
+  replaceSynonymsInHighlight?: boolean;
+};
+
+export interface SearchRequestParameters extends SearchParameters {
+  query: string;
+}
+
+export interface SearchForFacetValuesRequestParameters
+  extends SearchParameters {
+  facetQuery: string;
+  facetName: string;
+}
+
+export type GeoRectangle = [number, number, number, number];
+export type GeoPolygon = [number, number, number, number, number, number];
+
+// Documentation: https://www.algolia.com/doc/rest-api/search/?language=javascript#search-multiple-indexes
+export type SearchResponse = {
+  hits: Hit[];
+  page?: number;
+  nbHits?: number;
+  nbPages?: number;
+  hitsPerPage?: number;
+  processingTimeMS?: number;
+  query?: string;
+  params?: string;
+  index?: string;
+};
+
+export type Hit = {
+  _highlightResult?: object;
+};
+
+// Documentation: https://www.algolia.com/doc/rest-api/search/?language=javascript#search-for-facet-values
+export type SearchForFacetValuesResponse = {
+  value: string;
+  highlighted?: string;
+  count?: number;
+};
+
+export type SearchClient = {
+  addAlgoliaAgent?: (agent: string) => void;
+  search: (requests: SearchRequest[]) => Promise<{ results: SearchResponse[] }>;
+  searchForFacetValues?: (
+    requests: SearchForFacetValuesRequest[]
+  ) => Promise<{ facetHits: SearchForFacetValuesResponse[] }[]>;
+};
 
 export type InstantSearchConfig = {
-  appId: string;
-  apiKey: string;
+  appId?: string;
+  apiKey?: string;
   indexName: string;
 
   numberLocale?: string;
-  searchFunction?: () => void;
+  searchFunction?: (helper: AlgoliaSearchHelper) => void;
   createAlgoliaClient?: (
     algoliasearch: Function,
     appId: string,
     apiKey: string
   ) => object;
-  searchParameters?: object | void;
+  searchClient?: SearchClient;
+  searchParameters?: SearchParameters | void;
   urlSync?:
     | boolean
     | {
@@ -37,6 +176,21 @@ export type InstantSearchConfig = {
         trackedParameters?: string[];
         useHash?: boolean;
         getHistoryState?: () => object;
+      };
+  routing?:
+    | boolean
+    | {
+        router?: {
+          onUpdate: (cb: (object) => void) => void;
+          read: () => object;
+          write: (routeState: object) => void;
+          createURL: (routeState: object) => string;
+          dispose: () => void;
+        };
+        stateMapping?: {
+          stateToRoute(object): object;
+          routeToState(object): object;
+        };
       };
 };
 
@@ -58,16 +212,17 @@ export class InstantSearchInstance {
     state: Object;
   };
 
+  public refresh: () => void;
   public dispose: () => void;
 }
 
 @Component({
-  selector: "ng-ais-instantsearch",
-  template: `<ng-content></ng-content>`
+  selector: 'ais-instantsearch',
+  template: `<ng-content></ng-content>`,
 })
 export class NgAisInstantSearch implements AfterViewInit, OnInit, OnDestroy {
   @Input() public config: InstantSearchConfig;
-  @Input() public instanceName: string = "default";
+  @Input() public instanceName: string = 'default';
 
   @Output()
   change: EventEmitter<{ results: {}; state: {} }> = new EventEmitter<{
@@ -88,7 +243,7 @@ export class NgAisInstantSearch implements AfterViewInit, OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    this.instantSearchInstance.removeListener("render", this.onRender);
+    this.instantSearchInstance.removeListener('render', this.onRender);
     this.instantSearchInstance.dispose();
   }
 
@@ -96,26 +251,31 @@ export class NgAisInstantSearch implements AfterViewInit, OnInit, OnDestroy {
     // add default searchParameters with highlighting config
     if (!config.searchParameters) config.searchParameters = {};
     Object.assign(config.searchParameters, {
-      highlightPreTag: "__ais-highlight__",
-      highlightPostTag: "__/ais-highlight__"
+      highlightPreTag: '__ais-highlight__',
+      highlightPostTag: '__/ais-highlight__',
     });
 
     // remove URLSync widget if on SSR
     if (!isPlatformBrowser(this.platformId)) {
-      config.urlSync = false;
+      if (typeof config.urlSync !== 'undefined') delete config.urlSync;
+      if (typeof config.routing !== 'undefined') delete config.routing;
+    }
+
+    if (!config.searchClient && !config.createAlgoliaClient) {
+      const client = algoliasearch(config.appId, config.apiKey);
+      config.searchClient = client;
+      config.appId = undefined;
+      config.apiKey = undefined;
     }
 
     // custom algolia client agent
-    if (!config.createAlgoliaClient) {
-      config.createAlgoliaClient = (algoliasearch, appId, apiKey) => {
-        const client = algoliasearch(appId, apiKey);
-        client.addAlgoliaAgent(`angular-instantsearch ${VERSION}`);
-        return client;
-      };
+    if (typeof config.searchClient.addAlgoliaAgent === 'function') {
+      // add user agents
+      config.searchClient.addAlgoliaAgent(`angular (${AngularVersion.full})`);
+      config.searchClient.addAlgoliaAgent(`angular-instantsearch (${VERSION})`);
     }
-
     this.instantSearchInstance = instantsearch(config);
-    this.instantSearchInstance.on("render", this.onRender);
+    this.instantSearchInstance.on('render', this.onRender);
   }
 
   public addWidget(widget: Widget) {
@@ -126,10 +286,14 @@ export class NgAisInstantSearch implements AfterViewInit, OnInit, OnDestroy {
     this.instantSearchInstance.removeWidget(widget);
   }
 
+  public refresh() {
+    this.instantSearchInstance.refresh();
+  }
+
   onRender = () => {
     this.change.emit({
       results: this.instantSearchInstance.helper.lastResults,
-      state: this.instantSearchInstance.helper.state
+      state: this.instantSearchInstance.helper.state,
     });
   };
 }

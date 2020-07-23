@@ -6,15 +6,16 @@ You can do code and documentation contributions.
 
 ### Setup
 
-You need latest LTS NodeJS (^8.6.0) use [nvm](https://github.com/creationix/nvm) and [yarn](https://github.com/yarnpkg/yarn) as package manager.
+You need latest NodeJS (^10.5.0) use [nvm](https://github.com/creationix/nvm) and [yarn](https://yarnpkg.com/en/docs/install#alternatives-stable) (^1.7.0) as package manager.
 
-* `> git clone https://github.com/algolia/angular-instantsearch.git`
-* `> npm i -g yarn`
-* `> cd angular-instantsearch && yarn`
+```sh
+git clone https://github.com/algolia/angular-instantsearch.git
+cd angular-instantsearch
+```
 
 ### Run
 
-You can watch & reload library using `> yarn dev` and then open http://localhost:3000 to access stories of Angular InstantSearch components rendered into [dev-novel](https://github.com/algolia/dev-novel).
+You can access stories of Angular InstantSearch components by running the storybook with `yarn examples:storybook`.
 
 There is also an e-commerce example consuming the builded library and compliant to [AOT (compiles your app at build time)](https://angular.io/guide/aot-compiler) compiler. It must be run to test the library in production before any PRs.
 
@@ -24,5 +25,15 @@ You can use `> yarn examples:ecommerce` and open http://localhost:4200 to access
 
 Tests are ran with [jest](https://facebook.github.io/jest/) and [jest-preset-angular](https://github.com/thymikee/jest-preset-angular).
 
-* `> yarn test` -> run all tests
-* `> yarn test:watch` -> run tests and watch for changes
+- `> yarn test` -> run all tests
+- `> yarn test:watch` -> run tests and watch for changes
+
+## Releasing
+
+To release a stable version, go on master (`git checkout master`) and use:
+
+```sh
+yarn run release
+```
+
+It will create a pull request for the next release. When it's reviewed, approved and merged, then CircleCI will automatically publish it to npm.

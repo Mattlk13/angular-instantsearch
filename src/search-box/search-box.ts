@@ -4,17 +4,19 @@ import {
   Output,
   EventEmitter,
   Inject,
-  forwardRef
-} from "@angular/core";
+  forwardRef,
+  ViewChild,
+  AfterViewInit,
+  ElementRef,
+} from '@angular/core';
 
-import { connectSearchBox } from "instantsearch.js/es/connectors";
-import { noop } from "lodash-es";
-
-import { BaseWidget } from "../base-widget";
-import { NgAisInstantSearch } from "../instantsearch/instantsearch";
+import { connectSearchBox } from 'instantsearch.js/es/connectors';
+import { BaseWidget } from '../base-widget';
+import { NgAisInstantSearch } from '../instantsearch/instantsearch';
+import { noop } from '../utils';
 
 @Component({
-  selector: "ng-ais-search-box",
+  selector: 'ais-search-box',
   template: `
     <div [class]="cx()">
       <form
@@ -34,13 +36,13 @@ import { NgAisInstantSearch } from "../instantsearch/instantsearch";
           (input)="handleChange($event.target.value)"
           (focus)="focus.emit($event)"
           (blur)="blur.emit($event)"
+          #searchBox
         />
 
         <button
           [class]="cx('submit')"
           type="submit"
           title="{{submitTitle}}"
-          (click)="handleSubmit($event)"
         >
           <svg
             [ngClass]="cx('submitIcon')"
@@ -69,13 +71,15 @@ import { NgAisInstantSearch } from "../instantsearch/instantsearch";
         </button>
       </form>
     </div>
-  `
+  `,
 })
-export class NgAisSearchBox extends BaseWidget {
-  @Input() public placeholder: string = "Search";
-  @Input() public submitTitle: string = "Submit";
-  @Input() public resetTitle: string = "Reset";
+export class NgAisSearchBox extends BaseWidget implements AfterViewInit {
+  @ViewChild('searchBox') searchBox: ElementRef;
+  @Input() public placeholder: string = 'Search';
+  @Input() public submitTitle: string = 'Submit';
+  @Input() public resetTitle: string = 'Reset';
   @Input() public searchAsYouType: boolean = true;
+  @Input() public autofocus: boolean = false;
 
   // Output events
   // form
@@ -88,34 +92,39 @@ export class NgAisSearchBox extends BaseWidget {
   @Output() blur = new EventEmitter();
 
   public state = {
-    query: "",
-    refine: noop
+    query: '',
+    refine: noop,
   };
 
   constructor(
     @Inject(forwardRef(() => NgAisInstantSearch))
     public instantSearchParent: any
   ) {
-    super("SearchBox");
+    super('SearchBox');
     this.createWidget(connectSearchBox);
+  }
+
+  public ngAfterViewInit() {
+    if (this.autofocus) {
+      this.searchBox.nativeElement.focus();
+    }
   }
 
   public handleChange(query: string) {
     this.change.emit(query);
-
     if (this.searchAsYouType) {
       this.state.refine(query);
     }
   }
 
-  public handleSubmit(event: MouseEvent) {
+  public handleSubmit(event: Event) {
     // send submit event to parent component
     this.submit.emit(event);
 
     event.preventDefault();
 
     if (!this.searchAsYouType) {
-      this.state.refine(this.state.query);
+      this.state.refine(this.searchBox.nativeElement.value);
     }
   }
 
@@ -124,6 +133,6 @@ export class NgAisSearchBox extends BaseWidget {
     this.reset.emit(event);
 
     // reset search
-    this.state.refine("");
+    this.state.refine('');
   }
 }

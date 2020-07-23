@@ -4,40 +4,22 @@ exports[`InfiniteHits renders markup with state 1`] = `
 <ng-component
   testedWidget={[Function NgAisInfiniteHits]}
 >
-  
-        <ng-ais-instantsearch>
-    
-          
-    <ng-ais-infinite-hits>
-      
-      
+  <ais-instantsearch>
+    <ais-infinite-hits>
       <div
         class="ais-InfiniteHits"
       >
         
         
-        
-        
-  
-        
-        
-        
-        
         <div>
-          
-          
           <ul
             class="ais-InfiniteHits-list"
           >
             
-            
-            
             <li
               class="ais-InfiniteHits-item"
             >
-              
-              
-              <ng-ais-highlight
+              <ais-highlight
                 attribute="name"
                 ng-reflect-attribute="name"
                 ng-reflect-hit="[object Object]"
@@ -47,16 +29,12 @@ exports[`InfiniteHits renders markup with state 1`] = `
                 >
                   foo
                 </span>
-              </ng-ais-highlight>
-              
-            
+              </ais-highlight>
             </li>
             <li
               class="ais-InfiniteHits-item"
             >
-              
-              
-              <ng-ais-highlight
+              <ais-highlight
                 attribute="name"
                 ng-reflect-attribute="name"
                 ng-reflect-hit="[object Object]"
@@ -66,16 +44,12 @@ exports[`InfiniteHits renders markup with state 1`] = `
                 >
                   bar
                 </span>
-              </ng-ais-highlight>
-              
-            
+              </ais-highlight>
             </li>
             <li
               class="ais-InfiniteHits-item"
             >
-              
-              
-              <ng-ais-highlight
+              <ais-highlight
                 attribute="name"
                 ng-reflect-attribute="name"
                 ng-reflect-hit="[object Object]"
@@ -85,16 +59,12 @@ exports[`InfiniteHits renders markup with state 1`] = `
                 >
                   foobar
                 </span>
-              </ng-ais-highlight>
-              
-            
+              </ais-highlight>
             </li>
             <li
               class="ais-InfiniteHits-item"
             >
-              
-              
-              <ng-ais-highlight
+              <ais-highlight
                 attribute="name"
                 ng-reflect-attribute="name"
                 ng-reflect-hit="[object Object]"
@@ -104,37 +74,19 @@ exports[`InfiniteHits renders markup with state 1`] = `
                 >
                   barfoo
                 </span>
-              </ng-ais-highlight>
-              
-            
+              </ais-highlight>
             </li>
-            
-          
           </ul>
-          
-        
         </div>
-        
-  
-        
         
         <button
           class="ais-InfiniteHits-showMore"
         >
-          
-          Show more results
-        
+           Show more results 
         </button>
-        
-      
       </div>
-      
-    
-    </ng-ais-infinite-hits>
-    
-        
-  </ng-ais-instantsearch>
-      
+    </ais-infinite-hits>
+  </ais-instantsearch>
 </ng-component>
 `;
 
@@ -142,60 +94,28 @@ exports[`InfiniteHits renders markup without state 1`] = `
 <ng-component
   testedWidget={[Function NgAisInfiniteHits]}
 >
-  
-        <ng-ais-instantsearch>
-    
-          
-    <ng-ais-infinite-hits>
-      
-      
+  <ais-instantsearch>
+    <ais-infinite-hits>
       <div
         class="ais-InfiniteHits"
       >
         
         
-        
-        
-  
-        
-        
-        
-        
         <div>
-          
-          
           <ul
             class="ais-InfiniteHits-list"
           >
             
-            
-            
-            
-          
           </ul>
-          
-        
         </div>
-        
-  
-        
         
         <button
           class="ais-InfiniteHits-showMore"
         >
-          
-          Show more results
-        
+           Show more results 
         </button>
-        
-      
       </div>
-      
-    
-    </ng-ais-infinite-hits>
-    
-        
-  </ng-ais-instantsearch>
-      
+    </ais-infinite-hits>
+  </ais-instantsearch>
 </ng-component>
 `;

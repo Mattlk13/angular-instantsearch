@@ -1,6 +1,8 @@
 ---
 title: Widgets - Panel
 layout: widget.pug
+# not in the doc yet
+# canonical: https://www.algolia.com/doc/api-reference/widgets/panel/angular/
 ---
 
 # Panel
@@ -19,9 +21,9 @@ The Panel widget wraps other widgets in a consistent panel design.
 ## Code example
 
 ```html
-<ng-ais-panel
+<ais-panel
   header="Header foo"
   footer="Footer bar"
 >
-</ng-ais-panel>
+</ais-panel>
 ```
